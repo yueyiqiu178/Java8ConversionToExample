@@ -9,7 +9,8 @@ public class Lambdas {
 		Runnable r = () -> System.out.println("Hello!");
 		r.run();
 
-		Runnable cc = new Runnable() {
+		//java7寫法
+		Runnable r2 = new Runnable() {
 
 			@Override
 			public void run() {
@@ -17,7 +18,7 @@ public class Lambdas {
 				System.out.println("Hello2!");
 			}};
 		
-		cc.run();
+		r2.run();
 		
 		// Filtering with lambdas
 		List<Apple> inventory = Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red"));
