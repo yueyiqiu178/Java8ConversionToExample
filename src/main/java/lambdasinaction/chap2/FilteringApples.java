@@ -1,19 +1,23 @@
 package lambdasinaction.chap2;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FilteringApples{
 
 	public static void main(String ... args){
-
+		//2023.12.12重點Class
 		List<Apple> inventory = Arrays.asList(new Apple(80,"green"), new Apple(155, "green"), new Apple(120, "red"));	
 
 		// [Apple{color='green', weight=80}, Apple{color='green', weight=155}]
-		List<Apple> greenApples = filterApplesByColor(inventory, "green");
+		//List<Apple> greenApples = filterApplesByColor(inventory, "green");
+		List<Apple> greenApples = filter(inventory, FilteringApples::isGreenApple);
 		System.out.println(greenApples);
 
 		// [Apple{color='red', weight=120}]
-		List<Apple> redApples = filterApplesByColor(inventory, "red");
+		//List<Apple> redApples = filterApplesByColor(inventory, "red");
+		List<Apple> redApples = filter(inventory, (Apple a) -> "red".equals(a.getColor()));
 		System.out.println(redApples);
 
 		// [Apple{color='green', weight=80}, Apple{color='green', weight=155}]
@@ -36,6 +40,13 @@ public class FilteringApples{
 		});
 		System.out.println(redApples2);
 
+		List<Apple> rApples = filter(inventory, new ApplePredicate() {
+			@Override
+			public boolean test(Apple a) {
+				return a.getColor().equals("red") && a.getWeight()>100; 
+			}});
+		System.out.println(rApples);
+		
 	}
 
 	public static List<Apple> filterGreenApples(List<Apple> inventory){
@@ -79,6 +90,14 @@ public class FilteringApples{
 		return result;
 	}       
 
+    public static boolean isGreenApple(Apple apple) {
+        return "green".equals(apple.getColor()); 
+    }
+
+    public static boolean isHeavyApple(Apple apple) {
+        return apple.getWeight() > 150;
+    }
+	
 	public static class Apple {
 		private int weight = 0;
 		private String color = "";
